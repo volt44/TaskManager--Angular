@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html ng-app="tskMngr">
+    <head>
+        <title>Task Manager</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="styles/libs/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="styles/libs/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="jumbotron" align="center">
+                <h3>Task Manager</h3>
+            </div>
+        </div>
+        
+        <div class="container" id="data">
+            <div class="jumbotron">
+                <div ng-controller="tMngrCtrl">
+                    
+                    <!-- DISPLAY CURRENT TAKS IN CONTAINERS -->
+                    <div class="row">
+                        <div class="col-lg-6" ng-repeat="task in tasks">
+                            <div class="well">
+                                <h3>{{task.item}}</h3><!-- SHOW TASK -->
+                                <h5 id="TaskComment">{{task.comment}}</h5><!-- SHOW TASK COMMENT -->
+                                <br>
+                                
+                                <!-- SELECT THE STATUS OF TASK -->
+                                <h4>Status</h4>
+                                <input type="radio" name="gender" value="inactive"> Inactive
+                                <input type="radio" name="gender" value="inprogress"> In Progress
+                                <input type="radio" name="gender" value="testing"> Testing
+                                <input type="radio" name="gender" value="complete"> Complete
+                                <!-- END OF SELECTING STATUS -->
+                                
+                            </div>
+                        </div>
+                    </div><!-- END OF TASK -->
+                    
+                    <!-- ADDING A NEW TASK -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="well">
+                                <h4>Add a New Task</h4>
+                                <br>
+                                
+                                <div class="col-lg-6">
+                                    <label>New Task:
+                                        <input type="text" ng-model="newTask"/>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Comment:
+                                        <input type="text" ng-model="newComment"/>
+                                    </label>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="row" id="add">
+                                    <div class="col-lg-2">
+                                        <button class="btn-primary" ng-click="addTask(newTask, newComment)">Add Task</button>
+                                    </div>
+                                </div>
+
+                                <!-- ERROR HANDLING FOR ADDING TASKS -->
+                                <h4>{{missingNewTaskError}}</h4>
+                            </div>
+                        </div>
+                    </div><!-- END OF ADDING TASK -->
+                </div> 
+            </div>
+        </div>
+        
+        
+        
+        <div ng-controller="userCtrl">
+            <form name="userForm" ng-submit="saveUser(userInfo)">
+                <label>First Name: </label>
+                <input type="text" name="fName" ng-model="userInfo.fName" ng-required="true" ng-minlength="2"/>
+                
+                <span class="error-message" ng-show="userForm.fName.$dirty && userForm.fName.$error.required">Please Enter a First Name</span>
+                <span class="error-message" ng-show="userForm.fName.$dirty && userForm.fName.$error.minlength">First Name must be atleast 2 characters</span>
+                
+                <br><br>
+                
+                <label>Last Name: </label>
+                <input type="text" name="lName" ng-model="userInfo.lName" ng-required="true" ng-minlength="2"/>
+                
+                <span class="error-message" ng-show="userForm.fName.$dirty && userForm.lName.$error.required">Please Enter a Last Name</span>
+                <span class="error-message" ng-show="userForm.fName.$dirty && userForm.lName.$error.minlength">Last Name must be atleast 2 characters</span>
+                
+                <br><br>
+                
+                <input type="submit" value="Save" ng-disabled="userForm.$invalid"/>
+                
+                <ul>
+                    <li ng-repeat="item in user">
+                        {{'User: ' + item.fName + " " + item.lName}}
+                    </li>
+                </ul>
+            </form>
+        </div><!-- END OF USERCTRL -->
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
